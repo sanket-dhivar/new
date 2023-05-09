@@ -15,7 +15,6 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
     backendServiceArm: 'test-devops'
     backendAzureRmResourceGroupName: 'KE-DevOps-LandingZone'
     backendAzureRmStorageAccountName: 'testwesteurope123'
