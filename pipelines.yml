@@ -1,0 +1,37 @@
+trigger:
+  branches:
+    include:
+       - main
+
+steps:
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  inputs:
+    terraformVersion: 'latest'
+ # inputs:
+ #terraformVersion: '1.4.6' 
+
+
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    backendServiceArm: 'test-devops'
+    backendAzureRmResourceGroupName: 'KE-DevOps-LandingZone'
+    backendAzureRmStorageAccountName: 'testwesteurope123'
+    backendAzureRmContainerName: 'test-dev'
+    backendAzureRmKey: 'RgvUgw78ISrE3tzFSvPRqmtfUEfbnR7d6nRXnIhgw6GbEK92616z93NkyL9OcHxqWIbrSzGNZoda+ASthYh2KQ=='
+
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'test-devops'
+
+
+
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'test-devops'
